@@ -86,6 +86,7 @@ stage('SonarQube Analysis') {
             docker run --rm \
             --network devops \
             -v $WORKSPACE:/usr/src \
+            -w /usr/src \
             sonarsource/sonar-scanner-cli \
             -Dsonar.projectKey=python-mongo-app \
             -Dsonar.sources=app \
@@ -96,7 +97,7 @@ stage('SonarQube Analysis') {
         }
 
     }
-}   
+}  
 
 
 
