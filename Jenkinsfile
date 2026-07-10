@@ -78,8 +78,9 @@ stage('SonarQube Analysis') {
         withSonarQubeEnv('sonarqube') {
 
             sh '''
-
+            
             docker run --rm \
+            --network devops \
             -v ${WORKSPACE}:/usr/src \
             sonarsource/sonar-scanner-cli \
             sonar-scanner \
@@ -87,15 +88,14 @@ stage('SonarQube Analysis') {
             -Dsonar.sources=app \
             -Dsonar.host.url=$SONAR_HOST_URL \
             -Dsonar.token=$SONAR_AUTH_TOKEN
-
+            
             '''
 
         }
 
     }
 
-}
-    
+}    
 
 
 
