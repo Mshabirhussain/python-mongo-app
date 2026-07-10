@@ -3,9 +3,7 @@ pipeline {
 
 agent any
 
-    tools {
-    sonarRunner 'SonarScanner'
-}
+ 
 
 environment {
 
@@ -14,6 +12,8 @@ IMAGE_NAME="localhost:8082/docker-hosted/python-mongo-app"
 
 
 IMAGE_TAG="${BUILD_NUMBER}"
+
+SONAR_HOME = tool 'SonarScanner'
 
 
 }
@@ -78,7 +78,7 @@ stage('SonarQube Analysis') {
         withSonarQubeEnv('sonarqube') {
 
             sh '''
-             sonar-scanner \
+             ${scannerHome}/bin/sonar-scanner \
             -Dsonar.projectKey=python-mongo-app \
             -Dsonar.sources=app
             '''
