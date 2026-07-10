@@ -68,7 +68,22 @@ stage('Unit Test') {
     }
 }
 
+stage('Debug Sonar Mount') {
+    steps {
+        sh '''
+        echo "Jenkins workspace:"
+        pwd
+        ls -la
 
+        echo "Inside scanner container:"
+        docker run --rm \
+        -v $WORKSPACE:/usr/src \
+        -w /usr/src \
+        sonarsource/sonar-scanner-cli \
+        sh -c "pwd && ls -la"
+        '''
+    }
+}
 
 
 stage('SonarQube Analysis') {
