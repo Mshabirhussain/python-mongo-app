@@ -52,6 +52,7 @@ checkout scm
 
 
 stage('Unit Test') {
+    steps{
     sh '''
     docker run --rm \
       -v $PWD:/app \
@@ -62,6 +63,7 @@ stage('Unit Test') {
         pytest
       "
     '''
+    }
 }
 
 
