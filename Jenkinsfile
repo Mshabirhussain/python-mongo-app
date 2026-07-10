@@ -50,29 +50,18 @@ checkout scm
 
 }
 
-stage('Debug Workspace') {
+stage('Unit Test') {
     steps {
         sh '''
-            pwd
-            ls -la
-            find . -name requirements.txt
+        docker run --rm \
+        --volumes-from $(hostname) \
+        python:3.12 \
+        sh -c "
+            cd /var/jenkins_home/workspace/python-mongodb-pipeline &&
+            pip install -r requirements.txt &&
+            pytest
+        "
         '''
-    }
-}
-
-
-stage('Unit Test') {
-    steps{
-    sh '''
-    docker run --rm \
-      -v $PWD:/app \
-      -w /app \
-      python:3.12 \
-      sh -c "
-        pip install -r requirements.txt &&
-        pytest
-      "
-    '''
     }
 }
 
