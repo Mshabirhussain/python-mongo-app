@@ -3,6 +3,9 @@ pipeline {
 
 agent any
 
+    tools {
+        sonarQube 'SonarScanner'
+    }
 
 environment {
 
@@ -66,33 +69,25 @@ stage('Unit Test') {
 }
 
 
-stage('SonarQube Analysis') {
+stages {
 
+        stage('SonarQube Analysis') {
 
-steps {
+            steps {
 
+                withSonarQubeEnv('sonarqube') {
 
-withSonarQubeEnv('sonarqube') {
+                    sh '''
+                    sonar-scanner \
+                    -Dsonar.projectKey=python-mongo-app \
+                    -Dsonar.sources=app
+                    '''
 
+                }
 
-sh """
-
-sonar-scanner \
-
--Dsonar.projectKey=python-mongo-app \
-
--Dsonar.sources=. \
-
--Dsonar.python.coverage.reportPaths=coverage.xml
-
-
-"""
-
-
-}
-
-
-}
+            }
+        }
+    }
 
 
 }
