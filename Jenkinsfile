@@ -100,8 +100,8 @@ stage('SonarQube Analysis') {
             sh '''
             docker run --rm \
             --network devops \
-            -v $WORKSPACE:/usr/src \
-            -w /usr/src \
+            --volumes-from jenkins \
+            -w /var/jenkins_home/workspace/python-mongodb-pipeline \
             sonarsource/sonar-scanner-cli \
             -Dsonar.projectKey=python-mongo-app \
             -Dsonar.sources=app \
@@ -112,8 +112,7 @@ stage('SonarQube Analysis') {
         }
 
     }
-}  
-
+}
 
 
 stage('Docker Build') {
