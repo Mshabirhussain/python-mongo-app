@@ -50,6 +50,16 @@ checkout scm
 
 }
 
+stage('Debug Workspace') {
+    steps {
+        sh '''
+            pwd
+            ls -la
+            find . -name requirements.txt
+        '''
+    }
+}
+
 
 stage('Unit Test') {
     steps{
