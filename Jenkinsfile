@@ -78,15 +78,23 @@ stage('SonarQube Analysis') {
         withSonarQubeEnv('sonarqube') {
 
             sh '''
-             ${scannerHome}/bin/sonar-scanner \
+
+            docker run --rm \
+            -v ${WORKSPACE}:/usr/src \
+            sonarsource/sonar-scanner-cli \
+            sonar-scanner \
             -Dsonar.projectKey=python-mongo-app \
-            -Dsonar.sources=app
+            -Dsonar.sources=app \
+            -Dsonar.host.url=$SONAR_HOST_URL \
+            -Dsonar.token=$SONAR_AUTH_TOKEN
+
             '''
 
-                }
-
-            }
         }
+
+    }
+
+}
     
 
 
