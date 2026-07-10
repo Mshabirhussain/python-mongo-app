@@ -69,25 +69,25 @@ stage('Unit Test') {
 }
 
 
-stages {
 
-        stage('SonarQube Analysis') {
 
-            steps {
+stage('SonarQube Analysis') {
 
-                withSonarQubeEnv('sonarqube') {
+    steps {
 
-                    sh '''
-                    sonar-scanner \
-                    -Dsonar.projectKey=python-mongo-app \
-                    -Dsonar.sources=app
-                    '''
+        withSonarQubeEnv('sonarqube') {
+
+            sh '''
+             sonar-scanner \
+            -Dsonar.projectKey=python-mongo-app \
+            -Dsonar.sources=app
+            '''
 
                 }
 
             }
         }
-    }
+    
 
 
 
