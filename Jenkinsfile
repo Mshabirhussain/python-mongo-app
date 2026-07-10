@@ -51,36 +51,18 @@ checkout scm
 }
 
 
-stage('Install Dependencies') {
-    steps {
-        sh '''
-        python3 -m pip install --user -r requirements.txt
-        '''
-    }
-}
-
-
-
 stage('Unit Test') {
-
-
-steps {
-
-
-sh """
-
-. venv/bin/activate
-
-pytest
-
-"""
-
-
+    sh '''
+    docker run --rm \
+      -v $PWD:/app \
+      -w /app \
+      python:3.12 \
+      sh -c "
+        pip install -r requirements.txt &&
+        pytest
+      "
+    '''
 }
-
-
-}
-
 
 
 stage('SonarQube Analysis') {
