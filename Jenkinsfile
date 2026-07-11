@@ -192,52 +192,28 @@ withCredentials([
                 ]){
 
 
-sh """
-
+sh '''
 docker rm -f python-app || true
-
-
 docker rm -f mongo || true
 
-
-
 docker run -d \
-
---name mongo \
-
---network devops \
-
--e MONGO_INITDB_ROOT_USERNAME=devdb \
-
--e MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASS \
-
-mongo:7.0.9
-
-
+  --name mongo \
+  --network devops \
+  -e MONGO_INITDB_ROOT_USERNAME=devdb \
+  -e MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASS \
+  mongo:7.0.9
 
 sleep 20
 
-
-
 docker run -d \
-
---name python-app \
-
---network devops \
-
--p 5000:5000 \
-
--e MONGO_DB_HOSTNAME=mongo \
-
--e MONGO_DB_USERNAME=devdb \
-
--e MONGO_DB_PASSWORD=$MONGO_PASS \
-
-${IMAGE_NAME}:${IMAGE_TAG}
-
-
-"""
-
+  --name python-app \
+  --network devops \
+  -p 5000:5000 \
+  -e MONGO_DB_HOSTNAME=mongo \
+  -e MONGO_DB_USERNAME=devdb \
+  -e MONGO_DB_PASSWORD=$MONGO_PASS \
+  ${IMAGE_NAME}:${IMAGE_TAG}
+'''
 
 }
 
