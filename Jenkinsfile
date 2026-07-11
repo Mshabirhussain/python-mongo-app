@@ -131,7 +131,7 @@ withCredentials([
 
 usernamePassword(
 
-credentialsId:'nexus-creds',
+credentialsId:'nexus-docker-creds',
 
 usernameVariable:'USER',
 
