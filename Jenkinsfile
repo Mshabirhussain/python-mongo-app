@@ -68,35 +68,51 @@ stage('Unit Test') {
     }
 }
 
+stage('Debug Sonar Mount') {
+    steps {
+        sh '''
+        echo "Jenkins workspace:"
+        pwd
+        ls -la
 
+        echo "Inside scanner container:"
+        docker run --rm \
+        -v $WORKSPACE:/usr/src \
+        -w /usr/src \
+        sonarsource/sonar-scanner-cli \
+        sh -c "pwd && ls -la"
+        '''
+    }
+}
 
 
 stage('SonarQube Analysis') {
 
     steps {
 
-        withSonarQubeEnv('sonarqube') {
+        withCredentials([
+            string(
+                credentialsId: 'sonar-token',
+                variable: 'SONAR_TOKEN'
+            )
+        ]) {
 
             sh '''
-
             docker run --rm \
-            -v ${WORKSPACE}:/usr/src \
+            --network devops \
+            --volumes-from jenkins \
+            -w /var/jenkins_home/workspace/python-mongodb-pipeline \
             sonarsource/sonar-scanner-cli \
-            sonar-scanner \
             -Dsonar.projectKey=python-mongo-app \
             -Dsonar.sources=app \
-            -Dsonar.host.url=$SONAR_HOST_URL \
-            -Dsonar.token=$SONAR_AUTH_TOKEN
-
+            -Dsonar.host.url=http://sonarqube:9000 \
+            -Dsonar.token=$SONAR_TOKEN
             '''
 
         }
 
     }
-
 }
-    
-
 
 
 stage('Docker Build') {
