@@ -1,0 +1,203 @@
+/* Global page styling */
+
+body {
+
+    background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2
+    );
+
+    min-height: 100vh;
+
+    font-family:
+        'Segoe UI',
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
+}
+
+
+/* Navbar */
+
+.navbar {
+
+    border-radius: 0 0 20px 20px;
+
+}
+
+
+
+/* Main cards */
+
+.card {
+
+    border: none;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 30px rgba(0,0,0,0.25);
+
+}
+
+
+
+/* Card headers */
+
+.card-header {
+
+    padding: 20px;
+
+    font-weight: bold;
+
+}
+
+
+
+/* Form inputs */
+
+.form-control {
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+
+}
+
+
+
+.form-control:focus {
+
+    border-color: #667eea;
+
+    box-shadow:
+        0 0 10px rgba(102,126,234,0.4);
+
+}
+
+
+
+/* Buttons */
+
+.btn {
+
+    border-radius: 12px;
+
+    padding: 10px;
+
+    font-weight: 600;
+
+}
+
+
+.btn-success {
+
+    background:
+        linear-gradient(
+            45deg,
+            #11998e,
+            #38ef7d
+        );
+
+    border: none;
+
+}
+
+
+
+.btn-danger {
+
+    border-radius: 10px;
+
+}
+
+
+
+/* Employee table */
+
+.table {
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+}
+
+
+
+.table tbody tr {
+
+    transition:
+        background-color 0.2s ease;
+
+}
+
+
+
+.table tbody tr:hover {
+
+    background-color:
+        rgba(102,126,234,0.15);
+
+}
+
+
+
+/* Employee count badge */
+
+.badge {
+
+    font-size: 14px;
+
+    padding: 10px 15px;
+
+    border-radius: 20px;
+
+}
+
+
+
+/* Footer */
+
+footer {
+
+    color: white !important;
+
+    font-size: 14px;
+
+}
+
+
+
+/* Mobile support */
+
+@media(max-width:768px){
+
+
+    .card {
+
+        margin-bottom:20px;
+
+    }
+
+
+}

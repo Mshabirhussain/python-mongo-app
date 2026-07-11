@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- Left Side -->
+    <div class="col-lg-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+
+                <h4>Add Employee</h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <form action="/add" method="POST">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Employee Name
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            placeholder="Enter employee name"
+                            required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Department
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="department"
+                            placeholder="Enter department"
+                            required>
+
+                    </div>
+
+                    <button class="btn btn-success w-100">
+
+                        Save Employee
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Right Side -->
+
+    <div class="col-lg-8">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white d-flex justify-content-between">
+
+                <h4>Employee List</h4>
+
+                <span class="badge bg-warning text-dark">
+
+                    Total Employees : {{ count }}
+
+                </span>
+
+            </div>
+
+            <div class="card-body">
+
+                {% if employees %}
+
+                <table class="table table-striped table-hover">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Name</th>
+
+                            <th>Department</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for emp in employees %}
+
+                        <tr>
+
+                            <td>{{ loop.index }}</td>
+
+                            <td>{{ emp.name }}</td>
+
+                            <td>{{ emp.department }}</td>
+
+                            <td>
+
+                                <a href="/delete/{{ emp.name }}"
+                                   class="btn btn-danger btn-sm">
+
+                                    Delete
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                {% else %}
+
+                <div class="alert alert-info">
+
+                    No Employees Found
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

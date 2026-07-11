@@ -1,4 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    jsonify
+)
 
 from app.database import collection
 
@@ -9,34 +16,75 @@ app = Flask(__name__)
 @app.route("/")
 def home():
 
-    return {
-        "message":"Python Mongo Application Running"
-    }
+    employees = list(
+        collection.find(
+            {},
+            {"_id": 0}
+        )
+    )
+
+    return render_template(
+        "index.html",
+        employees=employees,
+        count=len(employees)
+    )
 
 
-@app.post("/users")
-def save_user():
+@app.route("/add", methods=["POST"])
+def add_employee():
 
-    data=request.json
+    name = request.form.get("name")
+    department = request.form.get("department")
 
-    collection.insert_one(data)
 
-    return jsonify(
+    if name and department:
+
+        collection.insert_one(
+            {
+                "name": name,
+                "department": department
+            }
+        )
+
+
+    return redirect(
+        url_for("home")
+    )
+
+
+
+@app.route("/delete/<name>")
+def delete_employee(name):
+
+    collection.delete_one(
         {
-            "message":"User saved successfully"
+            "name": name
         }
     )
 
 
-@app.get("/users")
-def get_users():
-
-    users=list(collection.find({},{"_id":0}))
-
-    return jsonify(users)
+    return redirect(
+        url_for("home")
+    )
 
 
-if __name__=="__main__":
+
+@app.route("/api/employees")
+def api_employees():
+
+    employees = list(
+        collection.find(
+            {},
+            {"_id":0}
+        )
+    )
+
+
+    return jsonify(employees)
+
+
+
+if __name__ == "__main__":
 
     app.run(
         host="0.0.0.0",
