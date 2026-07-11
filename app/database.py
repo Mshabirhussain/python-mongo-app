@@ -9,3 +9,7 @@ host = os.getenv("MONGO_DB_HOSTNAME")
 client = MongoClient(
     f"mongodb://{username}:{password}@{host}:27017/"
 )
+
+db = client["devdb"]
+
+collection = db["users"]
