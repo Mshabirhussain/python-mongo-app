@@ -188,18 +188,8 @@ steps {
 
 
 withCredentials([
-
-usernamePassword(
-
-credentialsId:'mongodb-creds',
-
-usernameVariable:'MONGO_USER',
-
-passwordVariable:'MONGO_PASS'
-
-)
-
-]){
+                    string(credentialsId: 'mongo-password', variable: 'MONGO_PASS')
+                ]){
 
 
 sh """
@@ -217,7 +207,7 @@ docker run -d \
 
 --network devops \
 
--e MONGO_INITDB_ROOT_USERNAME=$MONGO_USER \
+-e MONGO_INITDB_ROOT_USERNAME=devdb \
 
 -e MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASS \
 
@@ -239,7 +229,7 @@ docker run -d \
 
 -e MONGO_DB_HOSTNAME=mongo \
 
--e MONGO_DB_USERNAME=$MONGO_USER \
+-e MONGO_DB_USERNAME=devdb \
 
 -e MONGO_DB_PASSWORD=$MONGO_PASS \
 
