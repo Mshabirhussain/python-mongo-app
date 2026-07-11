@@ -1,28 +1,11 @@
-import os
+from urllib.parse import quote_plus
 from pymongo import MongoClient
+import os
 
-
-mongo_host = os.getenv(
-    "MONGO_DB_HOSTNAME",
-    "mongo"
-)
-
-mongo_user = os.getenv(
-    "MONGO_DB_USERNAME",
-    "devdb"
-)
-
-mongo_password = os.getenv(
-    "MONGO_DB_PASSWORD",
-    "dev@123"
-)
-
+username = quote_plus(os.getenv("MONGO_DB_USERNAME"))
+password = quote_plus(os.getenv("MONGO_DB_PASSWORD"))
+host = os.getenv("MONGO_DB_HOSTNAME")
 
 client = MongoClient(
-    f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:27017/admin"
+    f"mongodb://{username}:{password}@{host}:27017/"
 )
-
-
-database = client["users"]
-
-collection = database["users"]
